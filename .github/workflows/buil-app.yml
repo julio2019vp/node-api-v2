@@ -26,7 +26,12 @@ jobs:
           echo "build ok" > dist/app.txt
 
       - name: Mostrar environment
-        run: echo "Environment: ${{ github.event.inputs.environment || 'dev' }}"
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Environment: ${{ github.event.inputs.environment }}"
+          else
+            echo "Environment: dev"
+          fi
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
