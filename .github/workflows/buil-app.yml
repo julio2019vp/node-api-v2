@@ -26,7 +26,7 @@ jobs:
           echo "Aplicación compilada correctamente" > dist/app.txt
 
       - name: Mostrar environment
-        if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'dev'
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'dev' }}
         run: echo "Environment: dev"
 
       - name: Subir artefacto
