@@ -1,0 +1,42 @@
+name: Build App
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        required: true
+        default: "dev"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Compilar aplicación
+        run: npm run build
+
+      - name: Mostrar environment
+        if: ${{ github.event.inputs.environment == 'dev' }}
+        run: echo "Environment: dev"
+
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: dist/
