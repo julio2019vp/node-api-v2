@@ -17,8 +17,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout código
         uses: actions/checkout@v4
+
+      - name: Crear build
+        run: |
+          mkdir dist
+          echo "build ok" > dist/app.txt
 
       - name: Mostrar environment
         run: echo "Environment: ${{ github.event.inputs.environment || 'dev' }}"
+
+      - name: Subir artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-build
+          path: dist/
