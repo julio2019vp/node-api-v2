@@ -32,8 +32,9 @@ jobs:
         run: npm run build
 
       - name: Mostrar environment
-        if: ${{ github.event.inputs.environment == 'dev' }}
-        run: echo "Environment: dev"
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'dev'
+        run: |
+          echo "Environment: dev"
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
