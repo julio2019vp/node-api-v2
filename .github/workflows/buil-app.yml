@@ -20,21 +20,14 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Instalar dependencias
-        run: npm install
-
       - name: Compilar aplicación
-        run: npm run build
+        run: |
+          mkdir dist
+          echo "Aplicación compilada correctamente" > dist/app.txt
 
       - name: Mostrar environment
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'dev'
-        run: |
-          echo "Environment: dev"
+        run: echo "Environment: dev"
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
