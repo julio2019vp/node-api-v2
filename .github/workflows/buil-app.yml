@@ -1,4 +1,4 @@
-name: Build App1
+name: Build App
 
 on:
   push:
@@ -8,6 +8,8 @@ on:
   workflow_dispatch:
     inputs:
       environment:
+        description: "Environment"
+        required: true
         default: dev
 
 jobs:
@@ -15,16 +17,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout código
+        uses: actions/checkout@v4
 
-      - name: Build
-        run: echo "build ok"
+      - name: Crear build
+        run: |
+          mkdir dist
+          echo "build ok" > dist/app.txt
 
-      - name: Env
-        run: echo "Environment: dev"
+      - name: Mostrar environment
+        run: echo "Environment: ${{ github.event.inputs.environment || 'dev' }}"
 
-      - name: Upload
+      - name: Subir artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: app
-          path: .
+          name: app-build
+          path: dist/
