@@ -5,12 +5,12 @@ on:
     branches:
       - main
 
-workflow_dispatch:
-  inputs:
-    environment:
-      description: "Environment"
-      required: true
-      default: dev
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment"
+        required: true
+        default: dev
 
 jobs:
   build:
@@ -20,13 +20,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Crear build
-        run: |
-          mkdir dist
-          echo "build ok" > dist/app.txt
-
-      - name: Subir artefacto
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-build
-          path: dist/
+      - name: Mostrar environment
+        run: echo "Environment: ${{ github.event.inputs.environment || 'dev' }}"
