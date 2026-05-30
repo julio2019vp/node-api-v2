@@ -6,27 +6,19 @@ on:
       - main
 
   workflow_dispatch:
-    inputs:
-      environment:
-        description: "Environment"
-        required: true
-        default: dev
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout código
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Compilar aplicación (simulado)
+      - name: Crear build
         run: |
           mkdir dist
-          echo "Aplicación compilada" > dist/app.txt
-
-      - name: Mostrar environment
-        run: echo "Environment: ${{ github.event.inputs.environment || 'dev' }}"
+          echo "build ok" > dist/app.txt
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
