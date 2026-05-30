@@ -10,7 +10,7 @@ on:
       environment:
         description: "Environment"
         required: true
-        default: "dev"
+        default: dev
 
 jobs:
   build:
@@ -20,14 +20,13 @@ jobs:
       - name: Checkout código
         uses: actions/checkout@v4
 
-      - name: Compilar aplicación
+      - name: Compilar aplicación (simulado)
         run: |
           mkdir dist
-          echo "Aplicación compilada correctamente" > dist/app.txt
+          echo "Aplicación compilada" > dist/app.txt
 
       - name: Mostrar environment
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'dev' }}
-        run: echo "Environment: dev"
+        run: echo "Environment: ${{ github.event.inputs.environment || 'dev' }}"
 
       - name: Subir artefacto
         uses: actions/upload-artifact@v4
